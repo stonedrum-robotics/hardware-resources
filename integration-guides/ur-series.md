@@ -1,5 +1,9 @@
 # Universal Robots UR5e / UR10e Integration Guide
 
+> [!NOTE]
+> This is a planning checklist, not a validated procedure. The linked SDK currently ships no working vendor driver and no physical emergency-stop for the hand; `hand.stop()` performs no physical action in the shipped code. All `[VENDOR_SPEC_REQUIRED]` and `[ARM_VENDOR_SPEC_REQUIRED]` values must be supplied from manufacturer documentation before any motion.
+> The remaining diagrams, dimensions, package names and commands are unverified planning references. This checklist does not authorize commissioning or establish compatibility; use manufacturer documentation and a configuration-specific engineering and safety review.
+
 This guide describes a first-pass integration pattern for mounting a Linkerbot L20 Lite, L20, or L30 hand on Universal Robots e-Series arms. Treat it as an engineering checklist, not a certified installation procedure; CE certification and final safety validation remain under verification.
 
 ## Section 1 - Prerequisites
@@ -147,6 +151,5 @@ Create a separate `hand` planning group for finger joints and keep the UR manipu
 - Measure DC supply voltage at the controller input before connecting the hand.
 - Confirm CAN/CAN FD or RS-485 termination and bus bitrate.
 - Run `ros2 launch dexterous_hand_ros2 hand.launch.py mock:=true` before hardware mode.
-- Move one finger joint at low speed while the arm is stationary.
-- Test hand `stop()` behavior and the UR emergency stop independently.
-- Execute combined arm-hand motion only after successful mock, stationary, and reduced-speed tests.
+- Confirm the UR reduced-speed mode and emergency-stop behavior with the hand unpowered. Do not command hand motion until a verified vendor driver exists; `hand.stop()` in the current SDK performs no physical action.
+- Treat combined arm-hand motion as future work: it requires a verified vendor driver, complete manufacturer specifications and a configuration-specific engineering and safety review. This checklist provides no clearance for motion.

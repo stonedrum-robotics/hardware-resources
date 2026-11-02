@@ -1,5 +1,9 @@
 # KUKA LBR iiwa 7 / iiwa 14 Integration Guide
 
+> [!NOTE]
+> This is a planning checklist, not a validated procedure. The linked SDK currently ships no working vendor driver and no physical emergency-stop for the hand; `hand.stop()` performs no physical action in the shipped code. All `[VENDOR_SPEC_REQUIRED]` and `[ARM_VENDOR_SPEC_REQUIRED]` values must be supplied from manufacturer documentation before any motion.
+> The remaining diagrams, dimensions, package names and commands are unverified planning references. This checklist does not authorize commissioning or establish compatibility; use manufacturer documentation and a configuration-specific engineering and safety review.
+
 This guide outlines a practical integration path for Linkerbot dexterous hands on KUKA LBR iiwa 7 and iiwa 14 arms. It assumes a research setup using a ROS 2 bridge or supervisor process and does not replace KUKA safety validation, site rules, or Linkerbot vendor documentation.
 
 ## Section 1 - Prerequisites
@@ -138,6 +142,5 @@ Keep the iiwa arm planning group separate from the Linkerbot `hand` group during
 - Verify hand power voltage, current limit, and fuse before energizing the controller.
 - Confirm communication termination, bitrate, protocol mode, and node address.
 - Launch the hand node in mock mode and inspect `/joint_states`.
-- Command one low-amplitude finger joint while the iiwa is stationary.
-- Test hand `stop()` and KUKA stop behavior independently.
-- Run combined iiwa-hand motion only after a cleared-workspace review and reduced-speed dry run.
+- Confirm the KUKA emergency-stop and reduced-speed behavior with the hand unpowered. Do not command hand motion until a verified vendor driver exists; `hand.stop()` in the current SDK performs no physical action.
+- Treat combined arm-hand motion as future work: it requires a verified vendor driver, complete manufacturer specifications and a configuration-specific engineering and safety review. This checklist provides no clearance for motion.
