@@ -1,5 +1,9 @@
 # Franka FR3 / Panda Integration Guide
 
+> [!NOTE]
+> This is a planning checklist, not a validated procedure. The linked SDK currently ships no working vendor driver and no physical emergency-stop for the hand; `hand.stop()` performs no physical action in the shipped code. All `[VENDOR_SPEC_REQUIRED]` and `[ARM_VENDOR_SPEC_REQUIRED]` values must be supplied from manufacturer documentation before any motion.
+> The remaining diagrams, dimensions, package names and commands are unverified planning references. This checklist does not authorize commissioning or establish compatibility; use manufacturer documentation and a configuration-specific engineering and safety review.
+
 This guide covers a conservative integration path for Linkerbot L20 Lite, L20, or L30 hands on Franka Research 3 and Panda arms. It is intended for lab engineering teams preparing first motion, not as a substitute for Franka, Linkerbot, or site safety documentation.
 
 ## Section 1 - Prerequisites
@@ -140,6 +144,5 @@ Define a `hand` planning group for Linkerbot joints and preserve the Franka arm 
 - Validate hand power polarity and current limit before connecting the controller.
 - Confirm bus termination, bitrate, node ID, and protocol mode.
 - Run the hand node in mock mode and confirm `/joint_states` publishes.
-- With the arm stationary, command one low-amplitude finger motion.
-- Test Franka stop/recovery and hand `stop()` behavior as separate actions.
-- Run combined motion in a cleared workspace with reduced speed and a spotter at the emergency stop.
+- Confirm the Franka emergency-stop and recovery chain with the hand unpowered. Do not command hand motion until a verified vendor driver exists; `hand.stop()` in the current SDK performs no physical action.
+- Treat combined arm-hand motion as future work: it requires a verified vendor driver, complete manufacturer specifications and a configuration-specific engineering and safety review. This checklist provides no clearance for motion.
